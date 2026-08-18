@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: memories_for_her
     steps:
       - uses: actions/checkout@v4
 
@@ -31,7 +34,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build/web
+          path: memories_for_her/build/web
 
   deploy:
     needs: build
