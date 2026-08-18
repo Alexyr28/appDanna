@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import '../constants.dart';
+import '../theme/app_motion.dart';
+import '../theme/app_theme.dart';
+import '../widgets/content_card.dart';
+import '../widgets/decorative_header.dart';
+import '../widgets/section_title.dart';
 
 class WomenDayScreen extends StatefulWidget {
   const WomenDayScreen({super.key});
@@ -10,6 +16,10 @@ class WomenDayScreen extends StatefulWidget {
 
 class _WomenDayScreenState extends State<WomenDayScreen>
     with SingleTickerProviderStateMixin {
+  // Bespoke sequenced intro (rose burst + "Gracias" fade) — kept as a
+  // hand-rolled AnimationController since it drives a single shared
+  // timeline across multiple stages that flutter_animate's effect
+  // chaining doesn't express more simply than this already does.
   late AnimationController _roseController;
   late Animation<double> _roseScale;
   late Animation<double> _roseOpacity;
@@ -48,56 +58,55 @@ class _WomenDayScreenState extends State<WomenDayScreen>
       children: [
         SafeArea(
           child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWide = constraints.maxWidth >= 900;
+            builder: (context, constraints) {
+              final isWide = constraints.maxWidth >= 900;
 
-          // Centro el contenido y limito el ancho máximo para web
-          return SingleChildScrollView(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1100),
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 24),
-                      _WomenDayHeader(),
-                      const SizedBox(height: 32),
-                      if (isWide)
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Expanded(
-                              flex: 3,
-                              child: _WomenDayCollage(),
+              return SingleChildScrollView(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1100),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: 24),
+                          const _WomenDayHeader(),
+                          const SizedBox(height: 32),
+                          if (isWide)
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Expanded(
+                                  flex: 3,
+                                  child: _WomenDayCollage(),
+                                ),
+                                SizedBox(width: 32),
+                                Expanded(
+                                  flex: 2,
+                                  child: _WomenDayMessageCard(),
+                                ),
+                              ],
+                            )
+                          else
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _WomenDayCollage(),
+                                SizedBox(height: 24),
+                                _WomenDayMessageCard(),
+                              ],
                             ),
-                            SizedBox(width: 32),
-                            Expanded(
-                              flex: 2,
-                              child: _WomenDayMessageCard(),
-                            ),
-                          ],
-                        )
-                      else
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _WomenDayCollage(),
-                            SizedBox(height: 24),
-                            _WomenDayMessageCard(),
-                          ],
-                        ),
-                      const SizedBox(height: 40),
-                    ],
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        },
-      ),
+              );
+            },
+          ),
         ),
         // Animación rosa + gracias al entrar
         AnimatedBuilder(
@@ -142,8 +151,7 @@ class _WomenDayScreenState extends State<WomenDayScreen>
                           const SizedBox(height: 20),
                           Text(
                             'Gracias',
-                            style: TextStyle(
-                              fontFamily: 'Pacifico',
+                            style: AppTheme.headingFont.copyWith(
                               fontSize: 36,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -180,27 +188,11 @@ class _WomenDayHeader extends StatelessWidget {
     const Color softPink = Color(0xFFF7CAD0);
     const Color softGold = Color(0xFFF6D365);
 
-    return Container(
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [purple, softPink],
-        ),
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: purple.withOpacity(0.30),
-            blurRadius: 20,
-            offset: const Offset(0, 12),
-          ),
-        ],
-        border: Border.all(
-          color: Colors.white.withOpacity(0.6),
-          width: 1.5,
-        ),
-      ),
+    return DecorativeHeader(
+      borderRadius: 28,
+      gradientColors: const [purple, softPink],
+      borderColor: Colors.white.withOpacity(0.6),
+      shadowColor: purple.withOpacity(0.30),
       child: Column(
         children: [
           Row(
@@ -212,26 +204,16 @@ class _WomenDayHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
-          Text(
-            AppTexts.womenDayTitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: 'Pacifico',
+          SectionTitle(
+            title: AppTexts.womenDayTitle,
+            titleStyle: AppTheme.headingFont.copyWith(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.white,
               height: 1.2,
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            AppTexts.womenDaySubtitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white70,
-              letterSpacing: 0.5,
-            ),
+            subtitleText: AppTexts.womenDaySubtitle,
+            subtitleTextColor: Colors.white70,
           ),
           const SizedBox(height: 18),
           Container(
@@ -246,14 +228,16 @@ class _WomenDayHeader extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        .animate()
+        .fadeIn(duration: AppMotion.base, curve: AppMotion.curve)
+        .slideY(begin: 0.06, end: 0, duration: AppMotion.base, curve: AppMotion.curve);
   }
 }
 
 class _WomenDayCollage extends StatelessWidget {
   const _WomenDayCollage();
 
-  // Rutas de assets (relativas al proyecto, sin prefijo del paquete)
   static const List<String> _imagePaths = [
     'assets/images/dannaAmor1.png',
     'assets/images/dannaAmor2.png',
@@ -272,7 +256,13 @@ class _WomenDayCollage extends StatelessWidget {
           runSpacing: 8,
           alignment: WrapAlignment.center,
           children: _imagePaths
-              .map((path) => _CollagePhoto(imagePath: path, maxSize: maxSize))
+              .asMap()
+              .entries
+              .map((entry) => _CollagePhoto(
+                    imagePath: entry.value,
+                    maxSize: maxSize,
+                    index: entry.key,
+                  ))
               .toList(),
         );
       },
@@ -283,10 +273,12 @@ class _WomenDayCollage extends StatelessWidget {
 class _CollagePhoto extends StatelessWidget {
   final String imagePath;
   final double maxSize;
+  final int index;
 
   const _CollagePhoto({
     required this.imagePath,
     required this.maxSize,
+    required this.index,
   });
 
   @override
@@ -305,7 +297,9 @@ class _CollagePhoto extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )
+        .animate(delay: AppMotion.staggerStep * index)
+        .fadeIn(duration: AppMotion.base, curve: AppMotion.curve);
   }
 }
 
@@ -317,23 +311,11 @@ class _WomenDayMessageCard extends StatelessWidget {
     const Color purple = Color(0xFF6A4C93);
     const Color softGold = Color(0xFFF6D365);
 
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: purple.withOpacity(0.25),
-          width: 1.6,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: purple.withOpacity(0.20),
-            blurRadius: 16,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+    return ContentCard(
+      borderColor: purple.withOpacity(0.25),
+      borderWidth: 1.6,
+      shadowColor: purple.withOpacity(0.20),
+      borderRadius: 26,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -378,6 +360,9 @@ class _WomenDayMessageCard extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        .animate(delay: AppMotion.staggerStep * 3)
+        .fadeIn(duration: AppMotion.base, curve: AppMotion.curve)
+        .slideY(begin: 0.06, end: 0, duration: AppMotion.base, curve: AppMotion.curve);
   }
 }
