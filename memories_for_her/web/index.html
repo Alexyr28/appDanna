@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Para que nunca olvides lo bueno" />
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Keepsake" />
+
+    <!-- Viewport optimizado para móviles -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+
+    <!-- Iconos para iOS - Asegúrate de crear estos íconos -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/Icon-180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/Icon-152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/Icon-120.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <title>Para que nunca olvides</title>
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Fuentes de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0f4f8;
+        font-family: "Crimson Text", serif;
+      }
+
+      /* Loading screen */
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+
+      .loading-text {
+        margin-top: 20px;
+        color: #2e5b9c;
+        font-size: 18px;
+      }
+
+      /* Spinner animation */
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid #7ba5d6;
+        border-top: 3px solid #2e5b9c;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Cargando recuerdos...</div>
+    </div>
+
+    <script>
+      // Ocultar loading cuando la app esté lista
+      window.addEventListener("flutter-first-frame", function () {
+        const loading = document.getElementById("loading");
+        loading.style.display = "none";
+      });
+    </script>
+
+    <!-- CanvasKit renderer para mejor rendimiento en móviles -->
+    <script>
+      var serviceWorkerVersion = null;
+      var scriptLoaded = false;
+
+      function loadMainDartJs() {
+        if (scriptLoaded) {
+          return;
+        }
+        scriptLoaded = true;
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "main.dart.js";
+        scriptTag.type = "application/javascript";
+        document.body.append(scriptTag);
+      }
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          var serviceWorkerUrl =
+            "flutter_service_worker.js?v=" + serviceWorkerVersion;
+          navigator.serviceWorker.register(serviceWorkerUrl);
+        });
+      }
+
+      loadMainDartJs();
+    </script>
+  </body>
+</html>
