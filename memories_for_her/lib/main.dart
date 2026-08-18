@@ -22,6 +22,19 @@ class MyApp extends StatelessWidget {
       title: 'Para que nunca olvides',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
+      // Clamp the system font-scale so accessibility text sizing can't
+      // break tightly-fit layouts (e.g. the nav bar) on phones that have
+      // a large system font size configured.
+      builder: (context, child) {
+        final mediaQuery = MediaQuery.of(context);
+        final clampedScale = mediaQuery.textScaler.scale(1).clamp(1.0, 1.3);
+        return MediaQuery(
+          data: mediaQuery.copyWith(
+            textScaler: TextScaler.linear(clampedScale),
+          ),
+          child: child!,
+        );
+      },
       home: const MainScreen(),
     );
   }
