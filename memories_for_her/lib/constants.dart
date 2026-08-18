@@ -31,53 +31,55 @@ class AppTexts {
     ),
     TimelineItem(
       date: "Febrero 2025",
-      title: "Nuestra primer foto de calidad",
+      title: "Nuestra primera foto de calidad",
       description: "La segunda vez con el vestuario juntos.",
       imageUrl: "assets/images/febrero2025.jpeg",
     ),
     TimelineItem(
       date: "Julio 2025",
       title: "El grado",
-      description: "Fue un honor acompañarte en ese dia tan especial.",
+      description:
+          "Que no sea el último baile y el último logro que este presente para ti",
       imageUrl: "assets/images/julio2025.jpeg",
     ),
     TimelineItem(
       date: "Agosto de 2025",
       title: "Nuestra primera salida Juntos",
       description:
-          "El dia que me quitaron la moto pero el dia que baile contigo toda la noche",
+          "El dia que me quitaron la moto jaja pero el dia que me sentí más feliz",
       imageUrl: "assets/images/agosto2025.jpeg",
     ),
     TimelineItem(
       date: "Septiembre 2025",
       title: "En tu cumpleaños",
-      description: "Recordar la vez que conoci a tu familia y me incluyeron",
+      description:
+          "Siempre recordaré tu fecha de cumpleaños y ese día que me incluiste en tu familia",
       imageUrl: "assets/images/septiembre2025.jpeg",
     ),
     TimelineItem(
       date: "Octubre 2025",
       title: "Tu audición",
-      description: "El verte bailar y brillar",
+      description: "Acompañandote en los momentos donde más feliz eres",
       imageUrl: "assets/images/octubre2025.jpeg",
     ),
     TimelineItem(
       date: "Noviembre 2025",
-      title: "Las salidas con los muchachos",
-      description: "Como ellos te quieren y te parchabas con ellos",
+      title: "Como te incluía en mis locuras",
+      description: "Y como ellos quieren y te parchabas con ellos",
       imageUrl: "assets/images/nov2025.jpeg",
     ),
     TimelineItem(
       date: "Diciembre 2025",
-      title: "El beso en la foto",
+      title: "Fotaza con beso incluido",
       description:
           "No es la primera foto pero es la que mas me llena el corazón",
       imageUrl: "assets/images/dic2025.jpeg",
     ),
     TimelineItem(
       date: "Enero 2026",
-      title: "El última foto",
+      title: "La última foto",
       description:
-          "Cuando te vi de nuevo haciendo tu arte y de lo que me enamoró de ti",
+          "Cuando te vi de nuevo haciendo tu arte y de lo que me enamoró de ti verte bailar y brillar",
       imageUrl: "assets/images/ene2026.jpeg",
     ),
   ];
